@@ -1,0 +1,14 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Welcome to Jamie's online Home</title>
+        {% endif %}
+     </head>
+     <body>
+         <div>Jamie's Online Home: <a href="/index">Home</a></div>
+        <hr>
+        {% block content %}{% endblock %}
+        </body>
+</html>

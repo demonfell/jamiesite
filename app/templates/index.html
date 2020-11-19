@@ -1,0 +1,10 @@
+<!doctype html>
+{% extends "base.html" %}
+{% block content%}
+    <h1>Today's fortune</h1>
+    {{ fortune_text }}
+    <h1>Albums I've Been Listening To</h1>
+    {% for album in albums %}
+    <div><p>{{ album.artist }} - <i>{{ album.title }}</i></p></div>
+    {% endfor %}
+  {% endblock %}
