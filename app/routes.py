@@ -1,8 +1,8 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Albums
 from werkzeug.urls import url_parse
 
 @app.route('/')
@@ -75,3 +75,17 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+@app.route('/albums/', methods=['POST'])
+def encode_hash():
+    '''endpoint to add albums'''
+    artist = request.json["artist"]
+    title = request.json["title"]
+    year = request.json["year"]
+    new_album = Albums(artist=artist, title=title, year=year)
+    try:
+        db.session.add(new_album)
+        db.session.commit()
+        return jsonify({"artist":new_album.artist, "title":new_album.title, "year":new_album.year})
+    except:
+        return jsonify({"error": "unable to add album"}), 500
